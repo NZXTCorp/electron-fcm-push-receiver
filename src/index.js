@@ -73,10 +73,12 @@ function onNotification(webContents) {
   return ({ notification, persistentId }) => {
     const persistentIds = config.get('persistentIds') || [];
     // Update persistentId
+    console.error(`[electron-fcm-receiver] ids: ${persistentIds}, webContents: ${webContents}`);
     config.set('persistentIds', [...persistentIds, persistentId]);
     // Notify the renderer process that a new notification has been received
     // And check if window is not destroyed for darwin Apps
     if (!webContents.isDestroyed()) {
+      console.error(`[electron-fcm-receiver] Notification: ${notification}`);
       webContents.send(NOTIFICATION_RECEIVED, notification);
     }
   };
