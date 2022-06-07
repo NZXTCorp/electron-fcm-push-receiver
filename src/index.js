@@ -1,6 +1,6 @@
 const { register, listen } = require('push-receiver');
 const { ipcMain } = require('electron');
-const Config = require('electron-config');
+const Config = require('electron-store');
 const {
   START_NOTIFICATION_SERVICE,
   NOTIFICATION_SERVICE_STARTED,
@@ -76,7 +76,7 @@ function onNotification(webContents) {
     config.set('persistentIds', [...persistentIds, persistentId]);
     // Notify the renderer process that a new notification has been received
     // And check if window is not destroyed for darwin Apps
-    if(!webContents.isDestroyed()){
+    if (!webContents.isDestroyed()) {
       webContents.send(NOTIFICATION_RECEIVED, notification);
     }
   };
